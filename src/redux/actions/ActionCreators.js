@@ -79,13 +79,13 @@ export const loginUser = (creds) => (dispatch) => {
             response => {
                 if (response.ok) {
                     return response;
-                } else {
+                } else {                    
                     var error = new Error('Error ' + response.status + ': ' + response.statusText);
                     error.response = response;
                     throw error;
                 }
             },
-            error => {
+            error => {                
                 throw error;
             })
         .then(response => response.json())
@@ -98,7 +98,7 @@ export const loginUser = (creds) => (dispatch) => {
                 //dispatch(fetchFavorites());
                 dispatch(receiveLogin(response));
             }
-            else {
+            else {                
                 var error = new Error('Error ' + response.status);
                 error.response = response;
                 throw error;

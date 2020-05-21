@@ -25,13 +25,11 @@ const Footer = () => {
                                 quinx@food.net</a>
                         </address>
                     </div>
-                    <div className="col-12 col-sm-4 align-self-center">
-                        <div className="text-center">
-                            <a className="btn btn-social-icon btn-facebook" href="http://www.facebook.com/profile.php?id="><i className="fa fa-facebook"></i></a>
-                            <a className="btn btn-social-icon btn-twitter" href="http://twitter.com/"><i className="fa fa-twitter"></i></a>
-                            <a className="btn btn-social-icon btn-instagram" href="https://www.instagram.com/"><i className="fa fa-instagram"></i></a>
-                            <a className="btn btn-social-icon" href="mailto:quinx@food.net"><i className="fa fa-envelope-o"></i></a>
-                        </div>
+                    <div className="col-12 col-sm-4 align-self-center text-center">
+                        <a className="btn btn-social-icon" href="http://www.facebook.com/profile.php?id="><i className="fa fa-facebook"></i></a>
+                        <a className="btn btn-social-icon" href="http://twitter.com/"><i className="fa fa-twitter"></i></a>
+                        <a className="btn btn-social-icon" href="https://www.instagram.com/"><i className="fa fa-instagram"></i></a>
+                        <a className="btn btn-social-icon" href="mailto:quinx@food.net"><i className="fa fa-envelope-o"></i></a>
                     </div>
                 </div>
                 <div className="row justify-content-center">
