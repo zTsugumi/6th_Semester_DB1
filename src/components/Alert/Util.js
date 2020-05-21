@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import Alert from "./Alert";
 
 const Util = {
-    alert: (status, message, okCb, reloadPage) => {
+    alert: (status, message, reloadPage, okCb) => {
         ReactDOM.render(
             <Alert
                 status={status}

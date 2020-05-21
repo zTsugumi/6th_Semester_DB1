@@ -1,70 +1,29 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../../shared/baseUrl';
 
-/******************************************************** DISHES ********************************************************/
-export const dishesLoading = () => ({
-    type: ActionTypes.DISHES_LOADING
-});
-
-export const addDishes = (dishes) => ({
-    type: ActionTypes.ADD_DISHES,
-    payload: dishes
-});
-
-export const dishesFailed = (errmess) => ({
-    type: ActionTypes.DISHES_FAILED,
-    payload: errmess
-});
-
-// This is a thunk :)
-export const fetchDishes = () => (dispatch) => {
-    dispatch(dishesLoading());
-
-    return fetch(baseUrl + 'dishes')
-        .then(
-            response => {           // Promise resolve
-                if (response.ok) {  // Server responses ok [200...299]
-                    return response
-                }
-                else {              // Server responses errer [300...400]
-                    var error = new Error('Error ' + response.status + ': ' + response.statusText);
-                    error.response = response;
-                    throw error;
-                }
-            },
-            error => {              // Promise rejected
-                var errmess = new Error(error.message);
-                throw errmess;
-            }
-        )
-        .then(response => response.json())
-        .then(dishes => dispatch(addDishes(dishes)))
-        .catch(error => dispatch(dishesFailed(error.message)));
-};
-
 /**************************************************** AUTHORIZATION ****************************************************/
-export const requestLogin = (creds) => {
+const requestLogin = (creds) => {
     return {
         type: ActionTypes.LOGIN_REQUEST,
         creds
     }
 }
 
-export const receiveLogin = (response) => {
+const receiveLogin = (response) => {
     return {
         type: ActionTypes.LOGIN_SUCCESS,
         token: response.token
     }
 }
 
-export const loginError = (message) => {
+const loginError = (message) => {
     return {
         type: ActionTypes.LOGIN_FAILURE,
         message
     }
 }
 
-export const loginUser = (creds) => (dispatch) => {
+const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds));
 
@@ -79,13 +38,13 @@ export const loginUser = (creds) => (dispatch) => {
             response => {
                 if (response.ok) {
                     return response;
-                } else {                    
+                } else {
                     var error = new Error('Error ' + response.status + ': ' + response.statusText);
                     error.response = response;
                     throw error;
                 }
             },
-            error => {                
+            error => {
                 throw error;
             })
         .then(response => response.json())
@@ -98,7 +57,7 @@ export const loginUser = (creds) => (dispatch) => {
                 //dispatch(fetchFavorites());
                 dispatch(receiveLogin(response));
             }
-            else {                
+            else {
                 var error = new Error('Error ' + response.status);
                 error.response = response;
                 throw error;
@@ -107,22 +66,32 @@ export const loginUser = (creds) => (dispatch) => {
         .catch(error => dispatch(loginError(error.message)))
 };
 
-export const requestLogout = () => {
+const requestLogout = () => {
     return {
         type: ActionTypes.LOGOUT_REQUEST
     }
 }
 
-export const receiveLogout = () => {
+const receiveLogout = () => {
     return {
         type: ActionTypes.LOGOUT_SUCCESS
     }
 }
 
-export const logoutUser = () => (dispatch) => {
+const logoutUser = () => (dispatch) => {
     dispatch(requestLogout())
     localStorage.removeItem('token');
     localStorage.removeItem('creds');
     //dispatch(favoritesFailed("Error 401: Unauthorized"));
     dispatch(receiveLogout())
+}
+
+export default {
+    requestLogin,
+    receiveLogin,
+    loginError,
+    loginUser,
+    requestLogout,
+    receiveLogout,
+    logoutUser
 }

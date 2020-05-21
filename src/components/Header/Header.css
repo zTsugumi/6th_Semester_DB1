@@ -10,12 +10,16 @@
 }
 
 .navbar-sticky {
-    background: #333333aa;
+    background: #030303aa;
     position  : fixed;
     top       : 0;
     left      : 0;
     box-shadow: 1px 1px 1px #222;
     animation : moveDown 0.5s ease-in-out;
+}
+
+.container {
+    margin: 0, 0, 0, 0;
 }
 
 .navbar--logo-holder {
@@ -31,31 +35,61 @@
     animation   : rotate 0.7s ease-in-out 0.5s;
 }
 
+.navbar-toggler {
+    padding: 0
+}
+
+@media (max-width: 767px) {
+    .navbar--logo {
+        display: none;
+    }
+}
+
+@media (min-width: 767px) {
+    .navbar--logout {
+        display: none;
+    }
+}
+
 .navbar--link-list {
     list-style: none;
     font      : sans-serif;
 }
 
+.nav-item {
+    padding: 0.3rem 1rem 0.3rem 0;
+    cursor : pointer;
+}
+
+.navbar--link-item {
+    color  : #fff;
+    padding: 0 0.3rem;
+}
+
 .navbar--link-item:link {
     color          : #fff;
     text-decoration: none;
-    margin         : 0.4rem 1rem 0 0;
     padding        : 0 0.3rem;
-    cursor         : pointer;
 }
 
 .navbar--link-item:visited {
     color  : #fff;
-    margin : 0.4rem 1rem 0 0;
     padding: 0 0.3rem;
-    cursor : pointer;
 }
 
 .navbar--link-item:active {
     color  : teal;
-    margin : 0.4rem 1rem 0 0;
     padding: 0 0.3rem;
-    cursor : pointer;
+}
+
+.navbar a {
+    color          : white;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    color          : white;
+    text-decoration: none;
 }
 
 @keyframes moveDown {

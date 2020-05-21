@@ -9,6 +9,7 @@ import Util from '../Alert/Util';
 import './Header.css';
 
 // ?? Need to handle remember in Login
+// ?? Need to style login modal
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -56,51 +57,61 @@ class Header extends Component {
 
     render() {
         return (
-            <>
+            <div>
                 <Navbar className={this.props.sticky ? "navbar-sticky" : ""} expand="md">
-                    <NavbarBrand className="navbar--logo-holder">
-                        {this.props.sticky ? <img src={Logo} alt="logo" className="navbar--logo" /> : null}
-                        <h2> Quinx</h2>
-                    </NavbarBrand>
-                    <NavbarToggler className="navbar-dark" onClick={this.toggleNav} />
-                    <Collapse navbar isOpen={this.state.isNavOpen} >
-                        <Nav navbar className="navbar--link-list ml-auto">
-                            <NavItem className="mx-auto">
-                                <NavLink className="navbar--link-item" to="/home"> Home </NavLink>
-                            </NavItem>
-                            <NavItem className="mx-auto">
-                                <NavLink className="navbar--link-item" to="/about"> About </NavLink>
-                            </NavItem>
-                            <NavItem className="mx-auto">
-                                <NavLink className="navbar--link-item" to="/menu"> Menu </NavLink>
-                            </NavItem>
-                            <NavItem className="mx-auto">
-                                <NavLink className="navbar--link-item" to="/contact"> Contact </NavLink>
-                            </NavItem>
-                        </Nav>
-                        <Nav navbar>
-                            <NavItem>
-                                {!this.props.auth.isAuthenticated ?
-                                    <Button outline onClick={this.toggleModal}>
-                                        <span className="fa fa-sign-in fa-lg"></span> Login
-                                        {this.props.auth.isLoading
-                                            ? <span className="fa fa-spinner fa-pulse fa-fw"></span>
-                                            : null}
-                                    </Button>
-                                    :
-                                    <div>
-                                        <div className="navbar-text mr-3">{this.props.auth.user.username}</div>
-                                        <Button outline onClick={this.handleLogout}>
-                                            <span className="fa fa-sign-out fa-lg"></span> Logout
+                    <div className="container">
+                        <NavbarToggler className="navbar-dark" onClick={this.toggleNav} />
+                        <NavbarBrand className="navbar--logo-holder" href="/">
+                            <img src={Logo} alt="logo" className="navbar--logo" />
+                            <h2 className="navbar--brand-name">Quinx</h2>
+                        </NavbarBrand>
+                        <Collapse navbar isOpen={this.state.isNavOpen} >
+                            <Nav navbar className="navbar--link-list ml-auto">
+                                <NavItem>
+                                    <NavLink className="navbar--link-item" to="/welcome"> Home </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="navbar--link-item" to="/about"> About </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="navbar--link-item" to="/menu"> Menu </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="navbar--link-item" to="/contact"> Contact </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="navbar--link-item" to="/register"> Register </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    {!this.props.auth.isAuthenticated
+                                        ?
+                                        <div onClick={this.toggleModal}>
+                                            <span className="navbar--link-item fa fa-sign-in fa-lg"></span> Login
                                             {this.props.auth.isLoading
                                                 ? <span className="fa fa-spinner fa-pulse fa-fw"></span>
                                                 : null}
-                                        </Button>
-                                    </div>
-                                }
-                            </NavItem>
-                        </Nav>
-                    </Collapse>
+                                        </div>
+                                        :
+                                        <div>
+                                            <div className="navbar--link-item navbar-text mr-3">{this.props.auth.user.username}</div>
+                                        </div>
+                                    }
+                                </NavItem>
+                                <NavItem className="navbar--logout">
+                                    {this.props.auth.isAuthenticated
+                                        ?
+                                        <div onClick={this.handleLogout}>
+                                            <span className="navbar--link-item fa fa-sign-out fa-lg"></span> Logout
+                                            {this.props.auth.isLoading
+                                                ? <span className="fa fa-spinner fa-pulse fa-fw"></span>
+                                                : null}
+                                        </div>
+                                        : null
+                                    }
+                                </NavItem>
+                            </Nav>
+                        </Collapse>
+                    </div>
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                         <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
                         <ModalBody>
@@ -128,7 +139,7 @@ class Header extends Component {
                     </Modal>
                     <div id="alertHolder"></div>
                 </Navbar>
-            </>
+            </div >
         );
     }
 }
