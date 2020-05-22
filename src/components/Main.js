@@ -52,16 +52,35 @@ function Main() {
         return (
             <>
                 <Welcome element={element} />
-                <Menu />
+                <Menu dishes={dishes} />
             </>
         )
     }
+
+    // const DishWithId = ({ match }) => {
+    //     const dishSeletected = dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0];
+    //     const commentsSelected = comments.comments.filter((comment) => comment.dish === match.params.dishId);
+
+    //     return (
+    //         <DishDetail dish={dishSeletected}
+    //             isLoading={this.props.dishes.isLoading}
+    //             errMess={this.props.dishes.errMess}
+    //             comments={commentsSelected}
+    //             commentsLoading={this.props.comments.isLoading}
+    //             commentsErrMess={this.props.comments.errMess}
+    //             postComment={this.props.postComment}
+    //         />
+    //     );
+    // }
+
+
 
     // ?? Sticky animation is still a little bit buggy, Navbar need more modification ??
     // ?? Can add sticky to footer   
     // ?? Animation rerender problem
     // ?? Can change welcome image for different subpages
     // ?? Need to style subpages
+    // ?? Add map to Contact page
     return (
         <div>
             <Header sticky={isSticky} auth={auth}
@@ -70,6 +89,7 @@ function Main() {
                 <Route path="/welcome" component={HomePage} />
                 <Route exact path="/about" component={AboutPage} />
                 <Route exact path="/menu" component={MenuPage} />
+                {/* <Route path="/menu/:dishId" component={DishWithId} /> */}
                 <Redirect to="/welcome" />
             </Switch>
             <Footer />

@@ -14,3 +14,8 @@
 .welcome--logo {
     width: 10rem;
 }
+
+.welcome p {
+    color    : #fff;
+    font-size: 2rem;
+}

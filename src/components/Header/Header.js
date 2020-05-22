@@ -58,7 +58,7 @@ class Header extends Component {
     render() {
         return (
             <div>
-                <Navbar className={this.props.sticky ? "navbar-sticky" : ""} expand="md">
+                <Navbar className={this.props.sticky ? "navbar-sticky" : ""} expand="lg">
                     <div className="container">
                         <NavbarToggler className="navbar-dark" onClick={this.toggleNav} />
                         <NavbarBrand className="navbar--logo-holder" href="/">

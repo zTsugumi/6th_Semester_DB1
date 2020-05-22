@@ -1,0 +1,22 @@
+.menu--container {
+    padding-top   : 4rem;
+    padding-bottom: 4rem;
+}
+
+.menu--container p {
+    text-align: justify;
+}
+
+.menu--container .row {
+    padding-top   : 1rem;
+    padding-bottom: 3rem;
+}
+
+.menu--container .col-12 {
+    padding-top   : 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.menu--container img {
+    width: 200px;
+}
