@@ -1,0 +1,23 @@
+.home--container {
+    padding-top   : 4rem;
+    padding-bottom: 4rem;
+}
+
+.home--container p {
+    margin-top   : 2rem;
+    margin-bottom: 2rem;
+}
+
+.home--container .btn {
+    color: black;
+}
+
+.home--container .btn p {
+    margin-top   : 0rem;
+    margin-bottom: 0rem;
+}
+
+.home--item {
+    margin-top   : 1rem;
+    margin-bottom: 1rem;
+}

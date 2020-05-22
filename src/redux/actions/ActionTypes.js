@@ -2,6 +2,10 @@ export const DISHES_LOADING = 'DISHES_LOADING';
 export const ADD_DISHES = 'ADD_DISHES';
 export const DISHES_FAILED = 'DISHES_FAILED';
 
+export const STAFFS_LOADING = 'STAFFS_LOADING';
+export const ADD_STAFFS = 'ADD_STAFFS';
+export const STAFFS_FAILED = 'STAFFS_FAILED';
+
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';

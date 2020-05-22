@@ -68,7 +68,7 @@ class Header extends Component {
                         <Collapse navbar isOpen={this.state.isNavOpen} >
                             <Nav navbar className="navbar--link-list ml-auto">
                                 <NavItem>
-                                    <NavLink className="navbar--link-item" to="/welcome"> Home </NavLink>
+                                    <NavLink className="navbar--link-item" to="/welcome"> Welcome </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink className="navbar--link-item" to="/about"> About </NavLink>
@@ -78,6 +78,9 @@ class Header extends Component {
                                 </NavItem>
                                 <NavItem>
                                     <NavLink className="navbar--link-item" to="/contact"> Contact </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="navbar--link-item" to="/reservation"> Reservation </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink className="navbar--link-item" to="/register"> Register </NavLink>
