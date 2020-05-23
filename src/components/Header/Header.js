@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Logo from '../../assets/images/logo.png';
 import {
     Navbar, NavbarBrand, Nav, NavItem, NavbarToggler, Collapse,
-    Button, Modal, ModalHeader, ModalBody, Label, Form, FormGroup, Input
+    Button, Modal, ModalHeader, ModalBody, Label, Form, FormGroup, Input,
+    Dropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import Util from '../Alert/Util';
@@ -10,17 +11,20 @@ import './Header.css';
 
 // ?? Need to handle remember in Login
 // ?? Need to style login modal
+// ?? Need to fix dropdown style on mobile screen
 class Header extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             isNavOpen: false,
-            isModalOpen: false
+            isModalOpen: false,
+            isDropdownOpen: false
         };
 
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
+        this.toggleDropdown = this.toggleDropdown.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
     };
@@ -35,6 +39,12 @@ class Header extends Component {
         this.setState({
             isModalOpen: !this.state.isModalOpen
         })
+    }
+
+    toggleDropdown() {
+        this.setState({
+            isDropdownOpen: !this.state.isDropdownOpen
+        });
     }
 
     handleLogin(event) {
@@ -77,9 +87,6 @@ class Header extends Component {
                                     <NavLink className="navbar--link-item" to="/menu"> Menu </NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink className="navbar--link-item" to="/contact"> Contact </NavLink>
-                                </NavItem>
-                                <NavItem>
                                     <NavLink className="navbar--link-item" to="/reservation"> Reservation </NavLink>
                                 </NavItem>
                                 <NavItem>
@@ -96,11 +103,23 @@ class Header extends Component {
                                         </div>
                                         :
                                         <div>
-                                            <div className="navbar--link-item navbar-text mr-3">{this.props.auth.user.username}</div>
+                                            <Dropdown isOpen={this.state.isDropdownOpen} toggle={this.toggleDropdown}>
+                                                <DropdownToggle caret>
+                                                    {this.props.auth.user.username}
+                                                </DropdownToggle>
+                                                <DropdownMenu right>
+                                                    <DropdownItem><NavLink to="/profile">Profile</NavLink></DropdownItem>
+                                                    <DropdownItem divider />
+                                                    <DropdownItem onClick={this.handleLogout}>
+                                                        <span className="fa fa-sign-out fa-lg"></span>Logout
+                                                    </DropdownItem>
+                                                </DropdownMenu>
+                                            </Dropdown>
+                                            {/* <div className="navbar--link-item navbar-text mr-3">{this.props.auth.user.username}</div> */}
                                         </div>
                                     }
                                 </NavItem>
-                                <NavItem className="navbar--logout">
+                                {/* <NavItem className="navbar--logout">
                                     {this.props.auth.isAuthenticated
                                         ?
                                         <div onClick={this.handleLogout}>
@@ -111,7 +130,7 @@ class Header extends Component {
                                         </div>
                                         : null
                                     }
-                                </NavItem>
+                                </NavItem> */}
                             </Nav>
                         </Collapse>
                     </div>

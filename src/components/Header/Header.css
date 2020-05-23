@@ -61,6 +61,24 @@
     cursor : pointer;
 }
 
+.nav-item .dropdown-toggle {
+    padding         : 0rem 0.5rem;
+    background-color: inherit;
+    border-color    : none;
+}
+
+.nav-item .dropdown-item {
+    padding: 0.25rem 0.5rem;
+}
+
+.nav-item .dropdown-item a {
+    color: black;
+}
+
+.nav-item .dropdown-item a:hover {
+    color: black;
+}
+
 .navbar--link-item {
     color  : #fff;
     padding: 0 0.3rem;

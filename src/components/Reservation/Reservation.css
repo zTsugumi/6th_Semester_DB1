@@ -1,0 +1,17 @@
+.reservation--container {
+    padding-top   : 4rem;
+    padding-bottom: 4rem;
+}
+
+.reservation--container .row {
+    padding-top   : 1rem;
+    padding-bottom: 1rem;
+}
+
+.reservation--container p {
+    text-align: justify;
+}
+
+.reservation--container .form-group {
+    padding-top: 0;
+}

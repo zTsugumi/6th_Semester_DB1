@@ -6,10 +6,14 @@ import Welcome from './Welcome/Welcome';
 import Home from './Home/Home';
 import About from './About/About';
 import Menu from './Menu/Menu';
+import Reservation from './Reservation/Reservation';
 import DishDetail from './Menu/Dishdetail';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { actions } from 'react-redux-form';
+import Util from './Alert/Util';
 import AllActions from '../redux/actions/AllActions';
+
 
 function Main() {
     const { isSticky, element } = useSticky();
@@ -25,11 +29,15 @@ function Main() {
 
     const postComment = (dishId, rating, comment) => dispatch(AllActions.CommentActions.postComment(dishId, rating, comment));
 
+    const postReservation = (reservation) => dispatch(AllActions.ReservationActions.postReservation(reservation));
+    const resetReservationForm = () => dispatch(actions.reset('reservation'));
+
     // Hook effect every render
     useEffect(() => {
         dispatch(AllActions.DishActions.fetchDishes());
         dispatch(AllActions.CommentActions.fetchComments());
-        dispatch(AllActions.StaffActions.fetchStaffs());
+        dispatch(AllActions.StaffActions.fetchStaffs());        
+        dispatch(AllActions.ReservationActions.fetchReservations());     
     }, [])
 
     const HomePage = () => {
@@ -82,14 +90,39 @@ function Main() {
         );
     }
 
+    const ReservationPage = () => {
+        return (
+            <>
+                <Welcome element={element} />
+                <Reservation auth={auth} postReservation={postReservation}
+                    resetReservationForm={resetReservationForm} />
+            </>
+        )
+    }
 
+    const PrivateRoute = ({ component: Component, ...rest }) => {
+        if (!auth.isAuthenticated)
+            Util.alert(false, 'You need to login to use this feature', false);
+        return (
+            <Route {...rest} render={(props) => (
+                auth.isAuthenticated
+                    ? <Component {...props} />
+                    : <Redirect to={{
+                        pathname: '/welcome',
+                        state: { from: props.location }
+                    }} />
+            )}
+            />
+        );
+    }
 
     // ?? Sticky animation is still a little bit buggy, Navbar need more modification ??
-    // ?? Can add sticky to footer   
+    // ?? Can add sticky to footer
     // ?? Animation rerender problem
     // ?? Can change welcome image for different subpages
     // ?? Need to style subpages
-    // ?? Add map to Contact page
+    // ?? Need to add location map to the end of Welcome page
+    // ?? Need to fix alert box for reservation make page go bake to top
     return (
         <div>
             <Header sticky={isSticky} auth={auth}
@@ -99,6 +132,7 @@ function Main() {
                 <Route exact path="/about" component={AboutPage} />
                 <Route exact path="/menu" component={MenuPage} />
                 <Route path="/menu/:dishId" component={DishWithId} />
+                <PrivateRoute exact path="/reservation" component={ReservationPage} />
                 <Redirect to="/welcome" />
             </Switch>
             <Footer />
