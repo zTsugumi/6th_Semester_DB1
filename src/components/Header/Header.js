@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import Logo from '../../assets/images/logo.png';
 import {
     Navbar, NavbarBrand, Nav, NavItem, NavbarToggler, Collapse,
-    Button, Modal, ModalHeader, ModalBody, Label, Form, FormGroup, Input,
-    Dropdown, DropdownToggle, DropdownMenu, DropdownItem
+    Button, Modal, ModalHeader, ModalBody, Label, Form, FormGroup, Input, FormFeedback,
+    Dropdown, DropdownToggle, DropdownMenu, DropdownItem, TabContent, TabPane
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import Util from '../Alert/Util';
+import classnames from 'classnames';
 import './Header.css';
 
+// ?? Need to do validation on login & signup form
 // ?? Need to handle remember in Login
 // ?? Need to style login modal
 // ?? Need to fix dropdown style on mobile screen
@@ -19,14 +21,19 @@ class Header extends Component {
         this.state = {
             isNavOpen: false,
             isModalOpen: false,
-            isDropdownOpen: false
+            isDropdownOpen: false,
+            activeTab: '1',
+            validatePassword: false
         };
 
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.toggleTab = this.toggleTab.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleSignup = this.handleSignup.bind(this);
+        this.validatePassword = this.validatePassword.bind(this);
     };
 
     toggleNav() {
@@ -47,6 +54,12 @@ class Header extends Component {
         });
     }
 
+    toggleTab(tab) {
+        if (this.state.activeTab !== tab) {
+            this.setState({ activeTab: tab });
+        }
+    }
+
     handleLogin(event) {
         this.toggleModal();
         this.props.loginUser({ username: this.username.value, password: this.password.value })
@@ -63,6 +76,24 @@ class Header extends Component {
 
     handleLogout() {
         this.props.logoutUser();
+    }
+
+    handleSignup(event) {
+        this.toggleModal();
+        this.props.signupUser({ username: this.usernameSignup.value, password: this.passwordSignup.value })
+            .then(
+                () => {
+                    if (this.props.auth.isAuthenticated)
+                        Util.alert(true, "Signup Successful");
+                    else
+                        Util.alert(false, "Signup Failed");
+                }
+            )
+        event.preventDefault();
+    }
+
+    validatePassword() {
+        this.setState({ validatePassword: (this.password.value === this.passwordConfirm.value) ? true : false })
     }
 
     render() {
@@ -88,9 +119,6 @@ class Header extends Component {
                                 </NavItem>
                                 <NavItem>
                                     <NavLink className="navbar--link-item" to="/reservation"> Reservation </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink className="navbar--link-item" to="/register"> Register </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     {!this.props.auth.isAuthenticated
@@ -119,45 +147,73 @@ class Header extends Component {
                                         </div>
                                     }
                                 </NavItem>
-                                {/* <NavItem className="navbar--logout">
-                                    {this.props.auth.isAuthenticated
-                                        ?
-                                        <div onClick={this.handleLogout}>
-                                            <span className="navbar--link-item fa fa-sign-out fa-lg"></span> Logout
-                                            {this.props.auth.isLoading
-                                                ? <span className="fa fa-spinner fa-pulse fa-fw"></span>
-                                                : null}
-                                        </div>
-                                        : null
-                                    }
-                                </NavItem> */}
                             </Nav>
                         </Collapse>
                     </div>
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-                        <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
-                        <ModalBody>
-                            <Form onSubmit={this.handleLogin}>
-                                <FormGroup>
-                                    <Label htmlFor="username">Username</Label>
-                                    <Input type="text" id="username" name="username"
-                                        innerRef={(input) => this.username = input} />
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label htmlFor="password">Password</Label>
-                                    <Input type="password" id="password" name="password"
-                                        innerRef={(input) => this.password = input} />
-                                </FormGroup>
-                                <FormGroup check>
-                                    <Label check>
-                                        <Input type="checkbox" name="remember"
-                                            innerRef={(input) => this.remember = input} />
-                                    Remember me
-                                </Label>
-                                </FormGroup>
-                                <Button type="submit" value="submit" color="primary">Login</Button>
-                            </Form>
-                        </ModalBody>
+                        <ModalHeader className="container" toggle={this.toggleModal}>
+                            <div className="row">
+                                <div className={classnames({ active: this.state.activeTab === '1' }, "col-6")}
+                                    onClick={() => this.toggleTab('1')}>Login</div>
+                                <div className={classnames({ active: this.state.activeTab === '2' }, "col-6")}
+                                    onClick={() => this.toggleTab('2')} >Register</div>
+                            </div>
+                        </ModalHeader>
+
+                        <TabContent activeTab={this.state.activeTab}>
+                            <TabPane tabId="1">
+                                <ModalBody>
+                                    <Form onSubmit={this.handleLogin}>
+                                        <FormGroup>
+                                            <Label htmlFor="username">Username</Label>
+                                            <Input type="text" id="username" name="username"
+                                                innerRef={(input) => this.username = input} />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Label htmlFor="password">Password</Label>
+                                            <Input type="password" id="password" name="password"
+                                                innerRef={(input) => this.password = input} />
+                                        </FormGroup>
+                                        <FormGroup check>
+                                            <Label check>
+                                                <Input type="checkbox" name="remember"
+                                                    innerRef={(input) => this.remember = input} />
+                                                Remember me
+                                            </Label>
+                                        </FormGroup>
+                                        <Button type="submit" value="submit" color="primary">Login</Button>
+                                    </Form>
+                                </ModalBody>
+                            </TabPane>
+                            <TabPane tabId="2">
+                                <ModalBody>
+                                    <Form onSubmit={this.handleSignup}>
+                                        <FormGroup>
+                                            <Label htmlFor="usernameSignup">Username</Label>
+                                            <Input type="text" id="usernameSignup" name="usernameSignup"
+                                                innerRef={(input) => this.usernameSignup = input} />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Label htmlFor="passwordSignup">Password</Label>
+                                            <Input type="password" id="passwordSignup" name="passwordSignup"
+                                                innerRef={(input) => this.passwordSignup = input} />
+                                        </FormGroup>
+                                        <FormGroup>
+                                            <Label htmlFor="passwordConfirm">Confirm Password</Label>
+                                            <Input type="password" id="passwordConfirm" name="passwordConfirm"
+                                                innerRef={(input) => this.passwordConfirm = input}
+                                                valid={this.state.validatePassword}
+                                                invalid={!this.state.validatePassword}
+                                                onChange={this.validatePassword}
+                                            />
+                                            <FormFeedback invalid>Confirm password does not match.</FormFeedback>
+                                        </FormGroup>
+                                        <Button disabled={!this.state.validatePassword} type="submit" value="submit" color="primary">Register</Button>
+                                    </Form>
+                                </ModalBody>
+                            </TabPane>
+                        </TabContent>
+
                     </Modal>
                     <div id="alertHolder"></div>
                 </Navbar>
@@ -167,4 +223,3 @@ class Header extends Component {
 }
 
 export default Header;
-

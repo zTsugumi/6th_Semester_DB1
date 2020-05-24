@@ -110,6 +110,18 @@
     text-decoration: none;
 }
 
+.modal-header button {
+    margin-left: 0 !important
+}
+
+.modal-title .active {
+    outline: black;
+}
+
+.modal-title:hover {
+    cursor: pointer;
+}
+
 @keyframes moveDown {
     from {
         transform: translateY(-5rem);

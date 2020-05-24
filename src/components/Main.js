@@ -26,6 +26,7 @@ function Main() {
     const dispatch = useDispatch();
     const loginUser = (creds) => dispatch(AllActions.AuthActions.loginUser(creds));
     const logoutUser = () => dispatch(AllActions.AuthActions.logoutUser());
+    const signupUser = (creds) => dispatch(AllActions.AuthActions.signupUser(creds));
 
     const postComment = (dishId, rating, comment) => dispatch(AllActions.CommentActions.postComment(dishId, rating, comment));
 
@@ -126,7 +127,7 @@ function Main() {
     return (
         <div>
             <Header sticky={isSticky} auth={auth}
-                loginUser={loginUser} logoutUser={logoutUser} />
+                loginUser={loginUser} logoutUser={logoutUser} signupUser={signupUser}/>
             <Switch>
                 <Route path="/welcome" component={HomePage} />
                 <Route exact path="/about" component={AboutPage} />
