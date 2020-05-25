@@ -19,6 +19,7 @@ import AllActions from '../redux/actions/AllActions';
 function Main() {
     const { isSticky, element } = useSticky();
 
+    // Store states
     const auth = useSelector(state => state.auth);
     const dishes = useSelector(state => state.dishes);
     const staffs = useSelector(state => state.staffs);
@@ -26,6 +27,7 @@ function Main() {
     const favorites = useSelector(state => state.favorites);
     const reservations = useSelector(state => state.reservations);
 
+    // Reducers
     const dispatch = useDispatch();
     const loginUser = (creds) => dispatch(AllActions.AuthActions.loginUser(creds));
     const logoutUser = () => dispatch(AllActions.AuthActions.logoutUser());
@@ -46,7 +48,7 @@ function Main() {
         dispatch(AllActions.StaffActions.fetchStaffs());
         dispatch(AllActions.ReservationActions.fetchReservations());
         dispatch(AllActions.FavoriteActions.fetchFavorites());
-    }, [])
+    }, [dispatch])
 
     const HomePage = () => {
         const dishFeature = dishes.dishes.filter((dish) => dish.featured)[0];
@@ -118,9 +120,16 @@ function Main() {
         return (
             <>
                 <Welcome element={element} />
-                <Profile auth={auth} type={type}
-                    favorites={favorites} deleteFavorite={deleteFavorite} 
-                    reservations={reservations}/>
+                {auth.isAdmin
+                    ?
+                    <Profile auth={auth} type={type}
+                        dishes={dishes} />
+                    :
+                    <Profile auth={auth} type={type}
+                        favorites={favorites} deleteFavorite={deleteFavorite}
+                        reservations={reservations} />
+                }
+
             </>
         )
     }
@@ -162,6 +171,7 @@ function Main() {
                 <PrivateRoute exact path="/profile" component={ProfilePage} />
                 <PrivateRoute path="/profile/favorite" component={() => <ProfilePage type="favorite" />} />
                 <PrivateRoute path="/profile/reservation" component={() => <ProfilePage type="reservation" />} />
+                <PrivateRoute path="/profile/admin/menu" component={() => <ProfilePage type="admin-menu" />} />
                 <Redirect to="/welcome" />
             </Switch>
             <Footer />

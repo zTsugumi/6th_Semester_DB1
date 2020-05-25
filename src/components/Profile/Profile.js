@@ -1,50 +1,20 @@
 import React from 'react';
-import Sidebar from '../Sidebar/Sidebar';
-import Favorite from './Favorite';
-import MyReservation from './MyReservation';
 
-import './Profile.css';
+import Admin from './Admin/Admin';
+import NormalUser from './NormalUser/NormalUser';
 
 const Profile = (props) => {
-    const items = [
-        { name: 'favorite', label: 'Favorite', link: '/profile/favorite' },
-        {
-            name: 'reservation',
-            label: 'Reservation',
-            link: '/profile/reservation',
-            items: [
-                { name: 'statements', label: 'Statements' },
-                { name: 'reports', label: 'Reports' }
-            ]
-        }
-    ]
-
     return (
-        <div className="container profile--container">
-            <div className="row">
-                <div className="col-3">
-                    <Sidebar items={items} />
-                </div>
-                {props.type === 'favorite'
-                    ?
-                    <div className="col-9">
-                        <Favorite favorites={props.favorites} deleteFavorite={props.deleteFavorite} />
-                    </div>
-                    :
-                    null
-                }
-                {props.type === 'reservation'
-                    ?
-                    <div className="col-9">
-                        <MyReservation reservations={props.reservations}/>
-                    </div>
-                    :
-                    null
-                }
-            </div>
-
-
-        </div>
+        <>
+            {props.auth.isAdmin
+                ?
+                <Admin type={props.type}
+                    dishes={props.dishes} />
+                :
+                <NormalUser favorites={props.favorites} deleteFavorite={props.deleteFavorite}
+                    reservations={props.reservations} type={props.type} />
+            }
+        </>
     );
 }
 

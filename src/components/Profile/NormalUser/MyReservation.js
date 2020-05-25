@@ -1,6 +1,6 @@
 import React from 'react';
-import { Media, Button } from 'reactstrap';
-import { Loading } from '../Loading/Loading';
+import { Media } from 'reactstrap';
+import { Loading } from '../../Loading/Loading';
 import FadeIn from 'react-fade-in';
 
 // Need to add edit and delete reservation

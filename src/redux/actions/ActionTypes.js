@@ -31,3 +31,5 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const SIGNUP_REQUEST = 'LOGIN_REQUEST';
 export const SIGNUP_SUCCESS = 'LOGIN_SUCCESS';
 export const SIGNUP_FAILURE = 'LOGIN_FAILURE';
+
+export const CHECK_JWT = 'CHECK_JWT';

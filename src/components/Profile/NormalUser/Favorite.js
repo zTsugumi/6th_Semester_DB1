@@ -1,7 +1,7 @@
 import React from 'react';
 import { Media, Button } from 'reactstrap';
-import { baseUrl } from '../../shared/baseUrl';
-import { Loading } from '../Loading/Loading';
+import { baseUrl } from '../../../shared/baseUrl';
+import { Loading } from '../../Loading/Loading';
 import FadeIn from 'react-fade-in';
 import './Favorite.css';
 

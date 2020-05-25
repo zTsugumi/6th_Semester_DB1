@@ -13,7 +13,7 @@ const Footer = () => {
                             <li><Link className="footer--link-item" to="/welcome">Home</Link></li>
                             <li><Link className="footer--link-item" to="/about">About</Link></li>
                             <li><Link className="footer--link-item" to="/menu">Menu</Link></li>
-                            <li><Link className="footer--link-item" to="/contact">Contact</Link></li>
+                            <li><Link className="footer--link-item" to="/reservation">Reservation</Link></li>
                         </ul>
                     </div>
                     <div className="col-7 col-sm-5">

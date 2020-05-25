@@ -1,5 +1,7 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../../shared/baseUrl';
+import FavoriteActions from './FavoriteActions';
+import ReservationActions from './ReservationActions';
 
 /**************************************************** AUTHORIZATION ****************************************************/
 const requestLogin = (creds) => {
@@ -12,7 +14,8 @@ const requestLogin = (creds) => {
 const receiveLogin = (response) => {
     return {
         type: ActionTypes.LOGIN_SUCCESS,
-        token: response.token
+        token: response.token,
+        isAdmin: response.isAdmin
     }
 }
 
@@ -53,8 +56,11 @@ const loginUser = (creds) => (dispatch) => {
                 // If login was successful, set the token in local storage
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('creds', JSON.stringify(creds));
-                // Dispatch the success action
-                //dispatch(fetchFavorites());
+                if (response.isAdmin)
+                    localStorage.setItem('isAdmin', response.isAdmin);
+
+                dispatch(FavoriteActions.fetchFavorites());
+                dispatch(ReservationActions.fetchReservations());
                 dispatch(receiveLogin(response));
             }
             else {
@@ -82,7 +88,9 @@ const logoutUser = () => (dispatch) => {
     dispatch(requestLogout())
     localStorage.removeItem('token');
     localStorage.removeItem('creds');
-    //dispatch(favoritesFailed("Error 401: Unauthorized"));
+    localStorage.removeItem('isAdmin');
+    dispatch(FavoriteActions.favoritesFailed("Error 401: Unauthorized"));
+    dispatch(ReservationActions.reservationsFailed("Error 401: Unauthorized"));
     dispatch(receiveLogout())
 }
 
@@ -148,6 +156,50 @@ const signupUser = (creds) => (dispatch) => {
         })
         .catch(error => dispatch(signupError(error.message)));
 };
+
+// const checkUser = () => (dispatch) => {
+//     //    dispatch(requestLogin(creds));
+
+//     const bearer = 'Bearer ' + localStorage.getItem('token');
+
+//     return fetch(baseUrl + 'users/checkJWTToken', {
+//         headers: {
+//             'Authorization': bearer
+//         }
+//     })
+//         .then(
+//             response => {
+//                 if (response.ok) {
+//                     return response;
+//                 } else {
+//                     var error = new Error('Error ' + response.status + ': ' + response.statusText);
+//                     error.response = response;
+//                     throw error;
+//                 }
+//             },
+//             error => {
+//                 throw error;
+//             }
+//         )
+//         .then(response => response.json())
+//         .then(response => {
+//             if (response.success) {
+//                 // If login was successful, set the token in local storage
+//                 localStorage.setItem('token', response.token);
+//                 localStorage.setItem('creds', JSON.stringify(creds));
+
+//                 dispatch(FavoriteActions.fetchFavorites());
+//                 dispatch(ReservationActions.fetchReservations());
+//                 dispatch(receiveLogin(response));
+//             }
+//             else {
+//                 var error = new Error('Error ' + response.status);
+//                 error.response = response;
+//                 throw error;
+//             }
+//         })
+//         .catch(error => dispatch(loginError(error.message)));
+// }
 
 export default {
     requestLogin,
