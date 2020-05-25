@@ -13,13 +13,6 @@
     font      : sans-serif;
 }
 
-.footer--link-item:link {
-    color          : #fff;
-    text-decoration: none;
-    margin         : 0.4rem 1rem 0 0;
-    cursor         : pointer;
-}
-
 .footer--link-item:visited {
     color : #fff;
     margin: 0.4rem 1rem 0 0;

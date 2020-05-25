@@ -2,7 +2,8 @@ import auth from './auth';
 import dishes from './dishes';
 import comments from './comments';
 import staffs from './staffs';
-import reservation from './reservation';
+import reservations from './reservations';
+import favorites from './favorites';
 import { combineReducers } from 'redux';
 import { createForms } from 'react-redux-form';
 import { InitialReservation } from '../form';
@@ -15,7 +16,8 @@ const rootReducers = combineReducers({
     dishes,
     comments,
     staffs,
-    reservation,
+    reservations,
+    favorites,
     ...createForms({
         reservation: InitialReservation
     })

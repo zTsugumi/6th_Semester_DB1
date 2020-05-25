@@ -13,6 +13,11 @@ body {
   background-color: #F6F1EE;
 }
 
+a {
+  color          : inherit;
+  text-decoration: inherit;
+}
+
 .modal-open {
   overflow     : auto;
   padding-right: 0 !important;

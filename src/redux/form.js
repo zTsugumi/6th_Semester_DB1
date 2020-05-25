@@ -2,7 +2,8 @@ export const InitialReservation = {
     telnum: '',
     email: '',
     date: '',    
+    nGuest: '',
     agree: '',
-    contactType: '',
+    contactType: '',    
     message: ''
 }

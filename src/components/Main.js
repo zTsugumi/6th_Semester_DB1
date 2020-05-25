@@ -6,8 +6,9 @@ import Welcome from './Welcome/Welcome';
 import Home from './Home/Home';
 import About from './About/About';
 import Menu from './Menu/Menu';
-import Reservation from './Reservation/Reservation';
 import DishDetail from './Menu/Dishdetail';
+import Reservation from './Reservation/Reservation';
+import Profile from './Profile/Profile';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { actions } from 'react-redux-form';
@@ -22,6 +23,8 @@ function Main() {
     const dishes = useSelector(state => state.dishes);
     const staffs = useSelector(state => state.staffs);
     const comments = useSelector(state => state.comments);
+    const favorites = useSelector(state => state.favorites);
+    const reservations = useSelector(state => state.reservations);
 
     const dispatch = useDispatch();
     const loginUser = (creds) => dispatch(AllActions.AuthActions.loginUser(creds));
@@ -33,12 +36,16 @@ function Main() {
     const postReservation = (reservation) => dispatch(AllActions.ReservationActions.postReservation(reservation));
     const resetReservationForm = () => dispatch(actions.reset('reservation'));
 
+    const postFavorite = (dishId) => dispatch(AllActions.FavoriteActions.postFavorite(dishId));
+    const deleteFavorite = (dishId) => dispatch(AllActions.FavoriteActions.deleteFavorite(dishId));
+
     // Hook effect every render
     useEffect(() => {
         dispatch(AllActions.DishActions.fetchDishes());
         dispatch(AllActions.CommentActions.fetchComments());
-        dispatch(AllActions.StaffActions.fetchStaffs());        
-        dispatch(AllActions.ReservationActions.fetchReservations());     
+        dispatch(AllActions.StaffActions.fetchStaffs());
+        dispatch(AllActions.ReservationActions.fetchReservations());
+        dispatch(AllActions.FavoriteActions.fetchFavorites());
     }, [])
 
     const HomePage = () => {
@@ -75,6 +82,9 @@ function Main() {
     const DishWithId = ({ match }) => {
         const dishSeletected = dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0];
         const commentsSelected = comments.comments.filter((comment) => comment.dish === match.params.dishId);
+        const favoriteDish = (favorites.favorites === null)
+            ? false
+            : favorites.favorites.dishes.some((dish) => dish._id === match.params.dishId)
 
         return (
             <>
@@ -86,6 +96,9 @@ function Main() {
                     commentsLoading={comments.isLoading}
                     commentsErrMess={comments.errMess}
                     postComment={postComment}
+                    favorite={favoriteDish}
+                    postFavorite={postFavorite}
+                    deleteFavorite={deleteFavorite}
                 />
             </>
         );
@@ -97,6 +110,17 @@ function Main() {
                 <Welcome element={element} />
                 <Reservation auth={auth} postReservation={postReservation}
                     resetReservationForm={resetReservationForm} />
+            </>
+        )
+    }
+
+    const ProfilePage = ({ type = 'favorite' }) => {
+        return (
+            <>
+                <Welcome element={element} />
+                <Profile auth={auth} type={type}
+                    favorites={favorites} deleteFavorite={deleteFavorite} 
+                    reservations={reservations}/>
             </>
         )
     }
@@ -121,19 +145,23 @@ function Main() {
     // ?? Can add sticky to footer
     // ?? Animation rerender problem
     // ?? Can change welcome image for different subpages
-    // ?? Need to style subpages
+    // ?? Should style subpages with material-ui
     // ?? Need to add location map to the end of Welcome page
     // ?? Need to fix alert box for reservation make page go bake to top
+    // ?? Need to add edit comment
     return (
         <div>
             <Header sticky={isSticky} auth={auth}
-                loginUser={loginUser} logoutUser={logoutUser} signupUser={signupUser}/>
+                loginUser={loginUser} logoutUser={logoutUser} signupUser={signupUser} />
             <Switch>
                 <Route path="/welcome" component={HomePage} />
                 <Route exact path="/about" component={AboutPage} />
                 <Route exact path="/menu" component={MenuPage} />
                 <Route path="/menu/:dishId" component={DishWithId} />
                 <PrivateRoute exact path="/reservation" component={ReservationPage} />
+                <PrivateRoute exact path="/profile" component={ProfilePage} />
+                <PrivateRoute path="/profile/favorite" component={() => <ProfilePage type="favorite" />} />
+                <PrivateRoute path="/profile/reservation" component={() => <ProfilePage type="reservation" />} />
                 <Redirect to="/welcome" />
             </Switch>
             <Footer />

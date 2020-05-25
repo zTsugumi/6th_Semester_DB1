@@ -136,7 +136,7 @@ class Header extends Component {
                                                     {this.props.auth.user.username}
                                                 </DropdownToggle>
                                                 <DropdownMenu right>
-                                                    <DropdownItem><NavLink to="/profile">Profile</NavLink></DropdownItem>
+                                                    <NavLink to="/profile"><DropdownItem>Profile</DropdownItem></NavLink>
                                                     <DropdownItem divider />
                                                     <DropdownItem onClick={this.handleLogout}>
                                                         <span className="fa fa-sign-out fa-lg"></span>Logout
