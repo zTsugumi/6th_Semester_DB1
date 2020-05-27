@@ -4,6 +4,7 @@ import comments from './comments';
 import staffs from './staffs';
 import reservations from './reservations';
 import favorites from './favorites';
+import files from './files';
 import { combineReducers } from 'redux';
 import { createForms } from 'react-redux-form';
 import { InitialReservation } from '../form';
@@ -18,6 +19,7 @@ const rootReducers = combineReducers({
     staffs,
     reservations,
     favorites,
+    files,
     ...createForms({
         reservation: InitialReservation
     })

@@ -1,7 +1,7 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../../shared/baseUrl';
 
-/****************************************************** FAVORITES ******************************************************/
+/****************************************************** GET FAVORITES ******************************************************/
 const favoritesLoading = () => ({
     type: ActionTypes.FAVORITES_LOADING
 });
@@ -46,6 +46,7 @@ const fetchFavorites = () => (dispatch) => {
         .catch(error => dispatch(favoritesFailed(error.message)));
 };
 
+/***************************************************** POST FAVORITES ******************************************************/
 const postFavorite = (dishId) => (dispatch) => {
     const bearer = 'Bearer ' + localStorage.getItem('token');
 
@@ -76,6 +77,7 @@ const postFavorite = (dishId) => (dispatch) => {
         .catch(error => dispatch(favoritesFailed(error.message)));
 };
 
+/***************************************************** DELETE FAVORITE *****************************************************/
 const deleteFavorite = (dishId) => (dispatch) => {
     const bearer = 'Bearer ' + localStorage.getItem('token');
 
@@ -105,8 +107,6 @@ const deleteFavorite = (dishId) => (dispatch) => {
 };
 
 export default {
-    favoritesLoading,
-    addFavorites,
     favoritesFailed,
     fetchFavorites,
     postFavorite,

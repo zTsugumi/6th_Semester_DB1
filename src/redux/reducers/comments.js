@@ -2,7 +2,7 @@ import * as ActionTypes from '../actions/ActionTypes';
 
 const comments = (state = { isLoading: true, errMess: null, comments: [] }, action) => {
     switch (action.type) {
-        case ActionTypes.COMMENTs_LOADING:
+        case ActionTypes.COMMENTS_LOADING:
             return { ...state, isLoading: true, errMess: null, comments: [] }
 
         case ActionTypes.ADD_COMMENTS:
@@ -11,11 +11,11 @@ const comments = (state = { isLoading: true, errMess: null, comments: [] }, acti
         case ActionTypes.ADD_COMMENTS_FAILED:
             return { ...state, isLoading: false, errMess: action.payload, comments: [] };
 
-        case ActionTypes.ADD_COMMENT:
+        case ActionTypes.POST_COMMENT:
             var comment = action.payload;
             return { ...state, isLoading: false, comments: state.comments.concat(comment) };
 
-        case ActionTypes.POST_COMMENT_FAILED:
+        case ActionTypes.POST_COMMENTS_FAILED:
             return { ...state, isLoading: false, errMess: action.payload };
 
         default:

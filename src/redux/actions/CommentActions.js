@@ -1,10 +1,9 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../../shared/baseUrl';
 
-/******************************************************* COMMENTS *******************************************************/
-const addComment = (comment) => ({
-    type: ActionTypes.ADD_COMMENT,
-    payload: comment
+/******************************************************* GET COMMENTS *******************************************************/
+const commentsLoading = () => ({
+    type: ActionTypes.COMMENTS_LOADING
 });
 
 const addComments = (comments) => ({
@@ -18,6 +17,8 @@ const addCommentsFailed = (errmess) => ({
 });
 
 const fetchComments = () => (dispatch) => {
+    dispatch(commentsLoading());
+
     return fetch(baseUrl + 'comments')
         .then(
             response => {           // Promise resolve
@@ -40,18 +41,18 @@ const fetchComments = () => (dispatch) => {
         .catch(error => dispatch(addCommentsFailed(error.message)));
 };
 
-const postCommentFailed = (errmess) => ({
-    type: ActionTypes.POST_COMMENT_FAILED,
+/******************************************************* POST COMMENTS ******************************************************/
+const postComment = (comment) => ({
+    type: ActionTypes.POST_COMMENT,
+    payload: comment
+});
+
+const postCommentsFailed = (errmess) => ({
+    type: ActionTypes.POST_COMMENTS_FAILED,
     payload: errmess
 })
 
-const postComment = (dishId, rating, comment) => (dispatch) => {
-    const newComment = {
-        dish: dishId,
-        rating: rating,
-        comment: comment,
-    }
-
+const postComments = (newComment) => (dispatch) => {
     const bearer = 'Bearer ' + localStorage.getItem('token');
 
     return fetch(baseUrl + 'comments', {
@@ -80,15 +81,11 @@ const postComment = (dishId, rating, comment) => (dispatch) => {
             }
         )
         .then(response => response.json())      // After post, new comment will be returned back as response
-        .then(newComment => dispatch(addComment(newComment)))
-        .catch(error => dispatch(postCommentFailed(error.message)));
+        .then(newComment => dispatch(postComment(newComment)))
+        .catch(error => dispatch(postCommentsFailed(error.message)));
 }
 
 export default {
-    addComment,
-    addComments,
-    addCommentsFailed,
     fetchComments,
-    postComment,
-    postCommentFailed
+    postComments
 }

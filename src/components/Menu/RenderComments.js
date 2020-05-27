@@ -22,7 +22,12 @@ class CommentForm extends Component {
 
     handleSubmit(event) {
         this.toggleModal();
-        this.props.postComment(this.props.dishId, this.rating.value, this.comment.value)
+        var newComment = {
+            dish: this.props.dishId,
+            rating: this.rating.value,
+            comment: this.comment.value
+        }
+        this.props.postComments(newComment)
             .then(
                 (response) => {
                     if (response.type === 'POST_COMMENT_FAILED')
@@ -69,7 +74,7 @@ class CommentForm extends Component {
     };
 }
 
-const RenderComments = ({ comments, postComment, dishId }) => {
+const RenderComments = ({ comments, postComments, dishId }) => {
     if (comments != null)
         return (
             <div className="col-12 col-md-5 m-1">
@@ -85,7 +90,7 @@ const RenderComments = ({ comments, postComment, dishId }) => {
                         );
                     })}
                 </ul>
-                <CommentForm dishId={dishId} postComment={postComment} />
+                <CommentForm dishId={dishId} postComments={postComments} />
             </div>
         )
     else

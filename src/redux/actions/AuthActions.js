@@ -3,7 +3,7 @@ import { baseUrl } from '../../shared/baseUrl';
 import FavoriteActions from './FavoriteActions';
 import ReservationActions from './ReservationActions';
 
-/**************************************************** AUTHORIZATION ****************************************************/
+/**************************************************** LOGIN ****************************************************/
 const requestLogin = (creds) => {
     return {
         type: ActionTypes.LOGIN_REQUEST,
@@ -72,6 +72,7 @@ const loginUser = (creds) => (dispatch) => {
         .catch(error => dispatch(loginError(error.message)));
 };
 
+/**************************************************** LOGOUT ****************************************************/
 const requestLogout = () => {
     return {
         type: ActionTypes.LOGOUT_REQUEST
@@ -94,6 +95,7 @@ const logoutUser = () => (dispatch) => {
     dispatch(receiveLogout())
 }
 
+/**************************************************** SIGNUP ****************************************************/
 const requestSignup = (creds) => {
     return {
         type: ActionTypes.SIGNUP_REQUEST,
@@ -202,15 +204,7 @@ const signupUser = (creds) => (dispatch) => {
 // }
 
 export default {
-    requestLogin,
-    receiveLogin,
-    loginError,
     loginUser,
-    requestLogout,
-    receiveLogout,
     logoutUser,
-    requestSignup,
-    receiveSignup,
-    signupError,
     signupUser
 }

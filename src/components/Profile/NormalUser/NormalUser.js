@@ -4,11 +4,12 @@ import Favorite from './Favorite';
 import MyReservation from './MyReservation';
 import './NormalUser.css';
 
+const items = [
+    { name: 'favorite', label: 'Favorite', link: '/profile/favorite' },
+    { name: 'reservation', label: 'Reservation', link: '/profile/reservation' }
+]
+
 const NormalUser = (props) => {
-    const items = [
-        { name: 'favorite', label: 'Favorite', link: '/profile/favorite' },
-        { name: 'reservation', label: 'Reservation', link: '/profile/reservation' }
-    ]
     return (
         <div className="container normalUser--container">
             <div className="row">

@@ -33,9 +33,9 @@ function Main() {
     const logoutUser = () => dispatch(AllActions.AuthActions.logoutUser());
     const signupUser = (creds) => dispatch(AllActions.AuthActions.signupUser(creds));
 
-    const postComment = (dishId, rating, comment) => dispatch(AllActions.CommentActions.postComment(dishId, rating, comment));
+    const postComments = (newComment) => dispatch(AllActions.CommentActions.postComments(newComment));
 
-    const postReservation = (reservation) => dispatch(AllActions.ReservationActions.postReservation(reservation));
+    const postReservation = (newreservation) => dispatch(AllActions.ReservationActions.postReservation(newreservation));
     const resetReservationForm = () => dispatch(actions.reset('reservation'));
 
     const postFavorite = (dishId) => dispatch(AllActions.FavoriteActions.postFavorite(dishId));
@@ -97,7 +97,7 @@ function Main() {
                     comments={commentsSelected}
                     commentsLoading={comments.isLoading}
                     commentsErrMess={comments.errMess}
-                    postComment={postComment}
+                    postComments={postComments}
                     favorite={favoriteDish}
                     postFavorite={postFavorite}
                     deleteFavorite={deleteFavorite}
@@ -116,7 +116,7 @@ function Main() {
         )
     }
 
-    const ProfilePage = ({ type = 'favorite' }) => {
+    const ProfilePage = ({ type = auth.isAdmin ? 'admin-menu' : 'favorite' }) => {
         return (
             <>
                 <Welcome element={element} />

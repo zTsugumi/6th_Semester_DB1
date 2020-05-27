@@ -11,8 +11,8 @@ const Profile = (props) => {
                 <Admin type={props.type}
                     dishes={props.dishes} />
                 :
-                <NormalUser favorites={props.favorites} deleteFavorite={props.deleteFavorite}
-                    reservations={props.reservations} type={props.type} />
+                <NormalUser type={props.type} favorites={props.favorites} deleteFavorite={props.deleteFavorite}
+                    reservations={props.reservations} />
             }
         </>
     );

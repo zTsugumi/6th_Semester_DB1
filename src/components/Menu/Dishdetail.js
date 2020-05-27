@@ -43,7 +43,7 @@ const DishDetail = (props) => {
                         </div>
                         <RenderDish dish={props.dish} favorite={props.favorite}
                             postFavorite={props.postFavorite} deleteFavorite={props.deleteFavorite} />
-                        <RenderComments comments={props.comments} postComment={props.postComment} dishId={props.dish._id} />
+                        <RenderComments comments={props.comments} postComments={props.postComments} dishId={props.dish._id} />
                     </div>
                 </div>
             </FadeIn>

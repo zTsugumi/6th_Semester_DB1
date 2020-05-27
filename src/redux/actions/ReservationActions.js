@@ -1,7 +1,7 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../../shared/baseUrl';
 
-/******************************************************** RESERVATIONS ********************************************************/
+/******************************************************** GET RESERVATIONS ********************************************************/
 export const reservationLoading = () => ({
     type: ActionTypes.RESERVATIONS_LOADING
 });
@@ -22,7 +22,7 @@ export const fetchReservations = () => (dispatch) => {
     const bearer = 'Bearer ' + localStorage.getItem('token');
 
     return fetch(baseUrl + 'reservation', {
-        headers: {            
+        headers: {
             'Authorization': bearer
         },
     })
@@ -46,6 +46,7 @@ export const fetchReservations = () => (dispatch) => {
         .catch(error => dispatch(reservationsFailed(error.message)));
 };
 
+/******************************************************* POST RESERVATIONS ********************************************************/
 const postReservationFailed = (errmess) => ({
     type: ActionTypes.POST_RESERVATION_FAILED,
     payload: errmess
@@ -85,10 +86,7 @@ const postReservation = (reservation) => (dispatch) => {
 }
 
 export default {
-    reservationLoading,
-    addReservations,
     reservationsFailed,
     fetchReservations,
-    postReservation,
-    postReservationFailed
+    postReservation
 };

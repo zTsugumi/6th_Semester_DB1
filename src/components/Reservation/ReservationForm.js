@@ -1,35 +1,36 @@
 import React from 'react';
-import {
-    Breadcrumb, BreadcrumbItem, Label, Button
-    , Row, Col
-} from 'reactstrap';
+import { Label, Button, Row, Col } from 'reactstrap';
 import { Control, Form, Errors } from 'react-redux-form';
-import { Link } from 'react-router-dom';
-import FadeIn from 'react-fade-in';
 import Util from '../Alert/Util';
-import './Reservation.css';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => (val) && (val.length >= len);
+const isNumber = (val) => !isNaN(Number(val));
+const isDate = (date) => (date >= 1 && date <= 31);
+const isMonth = (month) => (month >= 1 && month <= 12);
+const isYear = (year) => (year >= 2020)
+const minGuest = (val) => val >= 1
+const maxGuest = (val) => val <= 20
+const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
-// Need more exact date, month, year validation
+// ?? Need more exact date, month, year validation
+// ?? Should split Form into other component
 const ReservationForm = (props) => {
     const handleSubmit = (values) => {
         var reservation = {
             telnum: values.telnum,
             email: values.email,
             date: `${values.year}-${values.month}-${values.date}`,
+            nGuest: values.nGuest,
             agree: values.agree === '' ? false : true,
             contactType: values.contactType,
             message: values.message
         }
 
-        console.log(reservation);
-
         props.postReservation(reservation)
             .then(
-                (response) => {                    
+                (response) => {
                     if (response.type === 'POST_RESERVATION_FAILED')
                         Util.alert(false, 'Please check if you already made a reservation on that date. Contact us for more information', false);
                     else
@@ -85,7 +86,7 @@ const ReservationForm = (props) => {
             </Row>
             <Row className="form-group">
                 <Label htmlFor="date" md={2}>Date</Label>
-                <Col md={2}>
+                <Col xs={3} md={2}>
                     <Control.text model=".month" id="month" name="month"
                         placeholder="MM"
                         className="form-control"
@@ -103,7 +104,7 @@ const ReservationForm = (props) => {
                         }}
                     />
                 </Col>
-                <Col md={2}>
+                <Col xs={3} md={2}>
                     <Control.text model=".date" id="date" name="date"
                         placeholder="DD"
                         className="form-control"
@@ -121,7 +122,7 @@ const ReservationForm = (props) => {
                         }}
                     />
                 </Col>
-                <Col md={2}>
+                <Col xs={6} md={2}>
                     <Control.text model=".year" id="year" name="year"
                         placeholder="YYYY"
                         className="form-control"
@@ -136,6 +137,28 @@ const ReservationForm = (props) => {
                             required: 'Required',
                             isNumber: 'Should contain only numbers',
                             isYear: 'Year invalid'
+                        }}
+                    />
+                </Col>
+            </Row>
+            <Row className="form-group">
+                <Label htmlFor="nGuest" md={2}>N. Guest</Label>
+                <Col md={10}>
+                    <Control.text model=".nGuest" id="nGuest" name="nGuest"
+                        placeholder="Number of guests"
+                        className="form-control"
+                        validators={{
+                            required, isNumber, minGuest, maxGuest
+                        }}
+                    />
+                    <Errors
+                        className="text-danger" model=".nGuest"
+                        show="touched"
+                        messages={{
+                            required: 'Required',
+                            isNumber: 'Invalid number',
+                            minGuest: 'There should be at least 1 guest',
+                            maxGuest: 'We can only handle upto 20 guests. Sorry for the inconvenience'
                         }}
                     />
                 </Col>
@@ -168,44 +191,13 @@ const ReservationForm = (props) => {
             </Row>
             <Row className="form-group">
                 <Col md={{ size: 10, offset: 2 }}>
-                    <Button type="submit" color="primary">
+                    <Button type="submit">
                         SUBMIT
-                        </Button>
+                    </Button>
                 </Col>
             </Row>
         </Form>
     );
 }
 
-const Reservation = (props) => {
-    if (!props.auth.isAuthenticated)
-        return (null);
-    else return (
-        <FadeIn>
-            <div className="container reservation--container">
-                <div className="row">
-                    <Breadcrumb>
-                        <BreadcrumbItem><Link to="/welcome">Home</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>Reservation</BreadcrumbItem>
-                    </Breadcrumb>
-                </div>
-                <div className="row row-content">
-                    <div className="col-12">
-                        <h3>Reservation</h3>
-                        <hr />
-                    </div>
-                    <div className="col-12 col-md-4">
-                        <p>For parties of six or more, we recommend making reservations at least two weeks in advance.
-                            For walk-ins, we only seat parties on a first come, first served basis.</p>
-                    </div>
-                    <div className="col-12 col-md-8">
-                        <ReservationForm postReservation={props.postReservation}
-                            resetReservationForm={props.resetReservationForm} />
-                    </div>
-                </div>
-            </div>
-        </FadeIn >
-    );
-}
-
-export default Reservation;
+export default ReservationForm;

@@ -1,7 +1,7 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../../shared/baseUrl';
 
-/******************************************************* STAFFS *******************************************************/
+/******************************************************* GET STAFFS *******************************************************/
 const staffsLoading = () => ({
     type: ActionTypes.STAFFS_LOADING
 });
@@ -43,8 +43,5 @@ const fetchStaffs = () => (dispatch) => {
 };
 
 export default {
-    staffsLoading,
-    addStaffs,
-    addStaffsFailed,
     fetchStaffs
 }

@@ -12,7 +12,7 @@ function RenderMenuItem({ dish }) {
             {/* ``: whatever is inside that is JS will be evaluated and be replaced by that */}
             <Media left middle>
                 <Link to={`/menu/${dish._id}`}>
-                    <Media object src={baseUrl + dish.image} width="50" alt={dish.name} />
+                    <Media object src={baseUrl + dish.image} alt={dish.name} />
                 </Link>
             </Media>
             <Media body className="d-none d-sm-block ml-3">
@@ -73,28 +73,28 @@ const Menu = (props) => {
                             <BreadcrumbItem active>Menu</BreadcrumbItem>
                         </Breadcrumb>
                     </div>
-                    <div className="row row-content">
+                    <div className="row">
                         <div className="col-12">
                             <h3>Breakfast — Served daily from 7 – 11 am.</h3>
                             <hr />
                         </div>
                         <MenuSection dishes={props.dishes.dishes} type={"breakfast"} />
                     </div>
-                    <div className="row row-content">
+                    <div className="row">
                         <div className="col-12">
                             <h3>Lunch — Served daily from 12 – 4 pm.</h3>
                             <hr />
                         </div>
                         <MenuSection dishes={props.dishes.dishes} type={"lunch"} />
                     </div>
-                    <div className="row row-content">
+                    <div className="row">
                         <div className="col-12">
                             <h3>Dinner — Served daily from 6 till close.</h3>
                             <hr />
                         </div>
                         <MenuSection dishes={props.dishes.dishes} type={"dinner"} />
                     </div>
-                    <div className="row row-content">
+                    <div className="row">
                         <div className="col-12">
                             <h3>Drinks — Served all day.</h3>
                             <hr />
