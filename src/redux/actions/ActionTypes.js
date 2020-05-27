@@ -4,20 +4,24 @@ export const ADD_DISHES = 'ADD_DISHES';                     // Add dishes to vie
 export const ADD_DISHES_FAILED = 'ADD_DISHES_FAILED';       // Add dishes to view failed, it's triggered when fetch failed
 
 /******************************************************* POST DISHES ********************************************************/
-export const POST_DISH = 'POST_DISH';                       // Post new dish to view ~ Add new dish to Redux store
+export const POST_DISHES_SUCCESS = 'POST_DISHES_SUCCESS';   // Post new dish to view ~ Add new dish to Redux store
 export const POST_DISHES_FAILED = 'POST_DISHES_FAILED';     // Post new dish to db failed, it's triggered when fetch post failed
 
 /****************************************************** DELETE DISHES *******************************************************/
-export const REMOVE_DISHES_SUCCESS = 'REMOVE_DISHES_SUCCESS';
+export const REMOVE_DISHES_SUCCESS = 'REMOVE_DISHES_SUCCESS';   // Remove all dishes from view ~ Change Redux store
 export const REMOVE_DISHES_FAILED = 'REMOVE_DISHES_FAILED';
 
 /******************************************************** PUT DISH **********************************************************/
-export const UPDATE_DISH = 'UPDATE_DISH';                   // Update view ~ Change Redux store with updated dish
+export const UPDATE_DISH_SUCCESS = 'UPDATE_DISH_SUCCESS';   // Update view ~ Change Redux store with updated dish
 export const PUT_DISH_FAILED = 'PUT_DISH_FAILED';           // Update dish to db failed, it's triggered when fetch put failed
 
 /******************************************************* DELETE DISH ********************************************************/
 export const REMOVE_DISH_SUCCESS = 'REMOVE_DISH_SUCCESS';   // Remove dish from view ~ Change Redux store
 export const REMOVE_DISH_FAILED = 'REMOVE_DISH_FAILED';
+
+
+
+
 
 /******************************************************* GET COMMENTS *******************************************************/
 export const COMMENTS_LOADING = 'COMMENT_LOADING';
@@ -25,13 +29,37 @@ export const ADD_COMMENTS = 'ADD_COMMENTS';                 // Add comments to v
 export const ADD_COMMENTS_FAILED = 'COMMENTS_FAILED';       // Add comments to view failed, it's triggered when fetch failed
 
 /******************************************************* POST COMMENTS ******************************************************/
-export const POST_COMMENT = 'POST_COMMENT';                 // Post new comment to view ~ Add new comment to Redux store
-export const POST_COMMENTS_FAILED = 'POST_COMMENT_FAILED';  // Post new comment to db failed, it's triggered when fetch post failed
+export const POST_COMMENTS_SUCCESS = 'POST_COMMENTS_SUCCESS';  // Post new comment to view ~ Add new comment to Redux store
+export const POST_COMMENTS_FAILED = 'POST_COMMENTS_FAILED';  // Post new comment to db failed, it's triggered when fetch post failed
+
+
+
+
 
 /******************************************************** GET STAFFS ********************************************************/
 export const STAFFS_LOADING = 'STAFFS_LOADING';
 export const ADD_STAFFS = 'ADD_STAFFS';                     // Add staffs to view ~ Add new staffs to Redux store
 export const ADD_STAFFS_FAILED = 'STAFFS_FAILED';           // Add staffs to view failed, it's triggered when fetch failed
+
+/******************************************************** POST STAFFS *******************************************************/
+export const POST_STAFFS_SUCCESS = 'POST_STAFFS_SUCCESS';   // Post new staff to view ~ Add new dish to Redux store
+export const POST_STAFFS_FAILED = 'POST_STAFFS_FAILED';     // Post new staff to db failed, it's triggered when fetch post failed
+
+/******************************************************* DELETE STAFFS ******************************************************/
+export const REMOVE_STAFFS_SUCCESS = 'REMOVE_STAFFS_SUCCESS';// Remove all staffs from view ~ Change Redux store
+export const REMOVE_STAFFS_FAILED = 'REMOVE_STAFFS_FAILED';
+
+/********************************************************* PUT STAFF ********************************************************/
+export const UPDATE_STAFF_SUCCESS = 'UPDATE_STAFF_SUCCESS'; // Update view ~ Change Redux store with updated staff
+export const PUT_STAFF_FAILED = 'PUT_STAFF_FAILED';         // Update staff to db failed, it's triggered when fetch put failed
+
+/******************************************************** DELETE STAFF ******************************************************/
+export const REMOVE_STAFF_SUCCESS = 'REMOVE_STAFF_SUCCESS';   // Remove dish from view ~ Change Redux store
+export const REMOVE_STAFF_FAILED = 'REMOVE_STAFF_FAILED';
+
+
+
+
 
 /***************************************************** GET RESERVATIONS *****************************************************/
 export const RESERVATIONS_LOADING = 'RESERVATIONS_LOADING';
@@ -49,8 +77,16 @@ export const ADD_FAVORITES = 'ADD_FAVORITES';               // Add favorites to 
 export const FAVORITES_FAILED = 'FAVORITES_FAILED';         // Add favorites to view failed, it's triggered when fetch failed
 // Here we don't handle post failed, because it's hard to happen)
 
+
+
+
+
 /******************************************************** POST FILE *********************************************************/
 export const POST_FILE_FAILED = 'POST_FILE_FAILED';         // Post new file to db failed, it's triggered when fetch post failed
+
+
+
+
 
 /******************************************************* AUTHORIZATION ******************************************************/
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';

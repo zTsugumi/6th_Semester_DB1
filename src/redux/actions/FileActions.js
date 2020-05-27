@@ -11,11 +11,7 @@ const postFile = (file) => (dispatch) => {
     const bearer = 'Bearer ' + localStorage.getItem('token');
     const formData = new FormData();
     formData.append('imageFile', file);
-
-    for (var pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-    }
-
+    
     return fetch(baseUrl + 'imageUpload', {
         method: "POST",
         body: formData,

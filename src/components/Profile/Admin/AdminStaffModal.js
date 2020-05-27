@@ -8,20 +8,12 @@ class PostEditModal extends Component {
         super(props);
 
         this.state = {
-            checkboxChecked: false,
             file: null
         }
 
-        this.onChangeCheckbox = this.onChangeCheckbox.bind(this);
         this.onChangeFile = this.onChangeFile.bind(this)
         this.handleEditSubmit = this.handleEditSubmit.bind(this);
         this.handlePostSubmit = this.handlePostSubmit.bind(this);
-    }
-
-    onChangeCheckbox() {
-        this.setState({
-            checkboxChecked: !this.state.checkboxChecked
-        });
     }
 
     onChangeFile(e) {
@@ -35,11 +27,10 @@ class PostEditModal extends Component {
 
         var updateInfo = {}
         if (this.name.value) updateInfo.name = this.name.value;
-        if (this.category.value) updateInfo.category = this.category.value;
-        if (this.price.value) updateInfo.price = this.price.value;
+        if (this.designation.value) updateInfo.designation = this.designation.value;
+        if (this.abbr.value) updateInfo.abbr = this.abbr.value;
         if (this.description.value) updateInfo.description = this.description.value;
         if (this.state.file) updateInfo.image = 'images/' + this.state.file.name;
-        updateInfo.featured = this.state.checkboxChecked ? true : false;
 
         if (this.state.file)
             this.props.postFile(this.state.file)
@@ -49,28 +40,27 @@ class PostEditModal extends Component {
                             Util.alert(false, 'POST Image Failed');
                     }
                 )
-
-        this.props.putDish(this.props.dishId, updateInfo)
+        this.props.putStaff(this.props.staffId, updateInfo)
             .then(
                 (response) => {
-                    if (response.type === 'PUT_DISH_FAILED')
+                    if (response.type === 'PUT_STAFF_FAILED')
                         Util.alert(false, 'PUT Failed');
                     else Util.alert(true, 'PUT Successful');
                 }
             )
+
         event.preventDefault();
     }
 
     handlePostSubmit(event) {
         this.props.toggleModal();
 
-        var newDish = {
+        var newStaff = {
             name: this.name.value,
-            category: this.category.value,
-            price: this.price.value,
+            designation: this.designation.value,
+            abbr: this.abbr.value,
             description: this.description.value,
             image: 'images/' + this.state.file.name,
-            featured: this.state.checkboxChecked ? true : false
         }
 
         this.props.postFile(this.state.file)
@@ -80,22 +70,21 @@ class PostEditModal extends Component {
                         Util.alert(false, 'POST Image Failed');
                 }
             )
-
-        this.props.postDishes(newDish)
+        this.props.postStaffs(newStaff)
             .then(
                 (response) => {
-                    if (response.type === 'POST_DISHES_FAILED')
-                        Util.alert(false, 'ADD Failed');
-                    else
-                        Util.alert(true, 'ADD Successful');
+                    if (response.type === 'POST_STAFFS_FAILED')
+                        Util.alert(false, 'POST Failed');
+                    else Util.alert(true, 'POST Successful');
                 }
             )
+
         event.preventDefault();
     }
 
     render() {
         return (
-            <Modal isOpen={this.props.isModalOpen} toggle={this.props.toggleModal} >
+            <Modal isOpen={this.props.isModalOpen} toggle={this.props.toggleModal}>
                 <ModalHeader toggle={this.props.toggleModal}>
                     {this.props.type === "edit" ? <h5>Edit</h5> : <h5>Add</h5>}
                 </ModalHeader>
@@ -109,17 +98,17 @@ class PostEditModal extends Component {
                             </div>
                         </FormGroup>
                         <FormGroup className="row">
-                            <Label className="col-3 align-self-center" style={{ marginBottom: 0 }} htmlFor="category">Category</Label>
+                            <Label className="col-3 align-self-center" style={{ marginBottom: 0 }} htmlFor="designation">Designation</Label>
                             <div className="col-9">
-                                <Input type="text" id="category" name="category"
-                                    innerRef={(input) => this.category = input} />
+                                <Input type="text" id="designation" name="designation"
+                                    innerRef={(input) => this.designation = input} />
                             </div>
                         </FormGroup>
                         <FormGroup className="row">
-                            <Label className="col-3 align-self-center" style={{ marginBottom: 0 }} htmlFor="price">Price</Label>
+                            <Label className="col-3 align-self-center" style={{ marginBottom: 0 }} htmlFor="abbr">Abbr</Label>
                             <div className="col-9">
-                                <Input type="text" id="price" name="price"
-                                    innerRef={(input) => this.price = input} />
+                                <Input type="text" id="abbr" name="abbr"
+                                    innerRef={(input) => this.abbr = input} />
                             </div>
                         </FormGroup>
                         <FormGroup className="row">
@@ -129,17 +118,10 @@ class PostEditModal extends Component {
                                     innerRef={(input) => this.description = input} />
                             </div>
                         </FormGroup>
-                        <FormGroup check className="row">
-                            <Label check className="col-9 align-self-center">
-                                <Input type="checkbox" name="featured" value="true"
-                                    onClick={this.onChangeCheckbox} />
-                                        Featured
-                            </Label>
-                        </FormGroup>
                         <FormGroup className="row">
-                            <Label className="col-3 align-self-center" style={{ marginBottom: 0 }} htmlFor="dishImage">Image</Label>
+                            <Label className="col-3 align-self-center" style={{ marginBottom: 0 }} htmlFor="staffImage">Image</Label>
                             <div className="col-9">
-                                <Input type="file" name="dishImage" id="dishImage"
+                                <Input type="file" name="staffImage" id="staffImage"
                                     onChange={this.onChangeFile} />
                             </div>
                         </FormGroup>
@@ -155,20 +137,20 @@ const DeleteModal = (props) => {
     const handleSubmit = () => {
         props.toggleModal();
         if (props.type === 'one')
-            props.deleteDish(props.dishId)
+            props.deleteStaff(props.staffId)
                 .then(
                     response => {
-                        if (response.type === 'REMOVE_DISH_SUCCESS')
+                        if (response.type === 'REMOVE_STAFF_SUCCESS')
                             Util.alert(true, "REMOVE Successful");
                         else
                             Util.alert(false, "REMOVE Failed");
                     }
                 );
         else
-            props.deleteDishes()
+            props.deleteStaffs()
                 .then(
                     response => {
-                        if (response.type === 'REMOVE_DISHES_SUCCESS')
+                        if (response.type === 'REMOVE_STAFFS_SUCCESS')
                             Util.alert(true, "REMOVE Successful");
                         else
                             Util.alert(false, "REMOVE Failed");
@@ -179,7 +161,7 @@ const DeleteModal = (props) => {
     return (
         <Modal className="container" isOpen={props.isModalOpen} toggle={props.toggleModal}>
             <ModalHeader toggle={props.toggleModal}>
-                {props.type === 'one' ? <h5>Remove Dish</h5> : <h5>Remove All Dishes</h5>}
+                {props.type === 'one' ? <h5>Remove Staff</h5> : <h5>Remove All Staffs</h5>}
             </ModalHeader>
             <ModalBody className="row">
                 {props.type === 'one'

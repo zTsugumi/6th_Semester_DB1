@@ -30,7 +30,7 @@ class CommentForm extends Component {
         this.props.postComments(newComment)
             .then(
                 (response) => {
-                    if (response.type === 'POST_COMMENT_FAILED')
+                    if (response.type === 'POST_COMMENTS_FAILED')
                         Util.alert(false, "Post comment is not available. Please check if you logged in and try again.", false);
                 }
             );

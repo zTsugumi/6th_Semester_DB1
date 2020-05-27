@@ -9,7 +9,7 @@ const dishes = (state = { isLoading: true, errMess: null, dishes: [] }, action) 
         case ActionTypes.ADD_DISHES_FAILED:
             return { ...state, isLoading: false, errMess: action.payload, dishes: [] }
 
-        case ActionTypes.POST_DISH:
+        case ActionTypes.POST_DISHES_SUCCESS:
             var dish = action.payload;
             return { ...state, isLoading: false, dishes: state.dishes.concat(dish) };
         case ActionTypes.POST_DISHES_FAILED:
@@ -20,7 +20,7 @@ const dishes = (state = { isLoading: true, errMess: null, dishes: [] }, action) 
         case ActionTypes.REMOVE_DISHES_FAILED:
             return { ...state, isLoading: false, errMess: action.payload };
 
-        case ActionTypes.UPDATE_DISH:
+        case ActionTypes.UPDATE_DISH_SUCCESS:
             dish = action.payload;
             var newDishes = state.dishes.map((item) => {
                 if (item._id === dish._id)

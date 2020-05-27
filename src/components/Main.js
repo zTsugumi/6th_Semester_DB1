@@ -27,8 +27,9 @@ function Main() {
     const favorites = useSelector(state => state.favorites);
     const reservations = useSelector(state => state.reservations);
 
-    // Reducers
     const dispatch = useDispatch();
+
+    // Reducers
     const loginUser = (creds) => dispatch(AllActions.AuthActions.loginUser(creds));
     const logoutUser = () => dispatch(AllActions.AuthActions.logoutUser());
     const signupUser = (creds) => dispatch(AllActions.AuthActions.signupUser(creds));
@@ -122,8 +123,7 @@ function Main() {
                 <Welcome element={element} />
                 {auth.isAdmin
                     ?
-                    <Profile auth={auth} type={type}
-                        dishes={dishes} />
+                    <Profile auth={auth} type={type} />
                     :
                     <Profile auth={auth} type={type}
                         favorites={favorites} deleteFavorite={deleteFavorite}
@@ -172,6 +172,7 @@ function Main() {
                 <PrivateRoute path="/profile/favorite" component={() => <ProfilePage type="favorite" />} />
                 <PrivateRoute path="/profile/reservation" component={() => <ProfilePage type="reservation" />} />
                 <PrivateRoute path="/profile/admin/menu" component={() => <ProfilePage type="admin-menu" />} />
+                <PrivateRoute path="/profile/admin/staff" component={() => <ProfilePage type="admin-staff" />} />
                 <Redirect to="/welcome" />
             </Switch>
             <Footer />

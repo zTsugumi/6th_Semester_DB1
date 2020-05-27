@@ -44,7 +44,7 @@ const fetchDishes = () => (dispatch) => {
 
 /******************************************************** POST DISHES *******************************************************/
 const postDish = (dish) => ({
-    type: ActionTypes.POST_DISH,
+    type: ActionTypes.POST_DISHES_SUCCESS,
     payload: dish
 });
 
@@ -122,7 +122,7 @@ const deleteDishes = () => (dispatch) => {
 
 /********************************************************* PUT DISH *********************************************************/
 const updateDish = (dish) => ({
-    type: ActionTypes.UPDATE_DISH,
+    type: ActionTypes.UPDATE_DISH_SUCCESS,
     payload: dish
 });
 

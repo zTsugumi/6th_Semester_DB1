@@ -43,7 +43,7 @@ const fetchComments = () => (dispatch) => {
 
 /******************************************************* POST COMMENTS ******************************************************/
 const postComment = (comment) => ({
-    type: ActionTypes.POST_COMMENT,
+    type: ActionTypes.POST_COMMENTS_SUCCESS,
     payload: comment
 });
 
